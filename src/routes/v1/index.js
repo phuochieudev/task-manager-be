@@ -7,6 +7,7 @@ const Router = express.Router()
 Router.get('/status', ( req, res ) => {
   res.status(StatusCodes.OK).json({ message: 'APIs V1 are ready to use' })
 })
+
 //Board APIs
 Router.use('/boards', boardRoute)
 

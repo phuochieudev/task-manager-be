@@ -4,7 +4,7 @@ import { boardModel } from "~/models/boardModel"
 import { slugify } from "~/utils/formatters"
 const createNew = async (reqBody) => {
   try {
-    // Xử lý logic dữ liệu từ đặc thù dự án
+    // Xử lý logic dữ liệu tùy đặc thù dự án
     const newBoard = {
       ...reqBody,
       slug: slugify(reqBody.title)
