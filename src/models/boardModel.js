@@ -1,5 +1,5 @@
-import { async } from '@babel/runtime/helpers/regeneratorRuntime'
 import Joi, { date } from 'joi'
+import { async } from '@babel/runtime/helpers/regeneratorRuntime'
 import { ObjectId } from 'mongodb'
 import { OBJECT_ID_RULE, OBJECT_ID_RULE_MESSAGE } from '~/utils/validators'
 import { GET_DB } from '~/config/mongodb'
@@ -66,10 +66,25 @@ const getDetails = async (id) => {
     return result[0] || null
   } catch (error) {throw new Error(error)}
 }
+
+//Nhiem vu cua function nay la push mot cai gia tri columnId vao cuoi mang columnOrderIds
+const pushColumnOrderIds = async (column) => {
+  try {
+    const result = await GET_DB().collection(BOARD_COLLECTION_NAME).findOneAndUpdate(
+      { _id: new ObjectId(column.boardId) },
+      { $push: { columnOrderIds:  new ObjectId(column._id) } },
+      { returnDocument: 'after' }
+    )
+
+    return result.value
+
+  } catch (error) {throw new Error(error)}
+}
 export const boardModel = {
   BOARD_COLLECTION_NAME,
   BOARD_COLLECTION_SCHEMA,
   createNew,
   findOneById,
-  getDetails
+  getDetails,
+  pushColumnOrderIds
 }
